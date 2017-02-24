@@ -48,13 +48,13 @@ public class UserController {
 	}
 	
 //	@RequiresPermissions(value = { "sys:user:edit" })
-//	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
-//	public String updateForm(@PathVariable("id") Integer id, Model model) {
-//		User user = userService.getUser(id);
-//		user.setPassword(null);
-//		model.addAttribute("user", user);
-//		return "pages/userForm";
-//	}
+	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
+	public String updateForm(@PathVariable("id") Integer id, Model model) {
+		User user = userService.getUser(id);
+		user.setPassword(null);
+		model.addAttribute("user", user);
+		return "sys/userForm";
+	}
 	
 	/**
 	 * Ajax请求。
@@ -81,7 +81,7 @@ public class UserController {
 		return obj.toString();
 	}
 	
-	@RequestMapping(value = "update", method = RequestMethod.POST)
+	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public String add(@RequestParam(value = "id") String id,@RequestParam(value = "username") String username,@RequestParam(value = "password") String password) {
 		User user=null;
 		if(null==id||id.equals("")){
@@ -122,29 +122,25 @@ public class UserController {
 	}
 	
 //	@RequiresPermissions(value = { "sys:user:edit" })
-//	@RequestMapping(value = "update", method = RequestMethod.POST)
-//	public String update(@Valid @ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
-//		User dbUser = userService.getUser(user.getId());
-//		dbUser.setUsername(user.getUsername());
-//		dbUser.setName(user.getName());
-//		if(StringUtils.isNotBlank(user.getPassword())){
-//			dbUser.setPassword(user.getPassword());
-//			UserUtils.encryptPassword(dbUser);
-//		}
-//		userService.updateUser(dbUser);
-//		redirectAttributes.addFlashAttribute("message", "更新用户" + user.getUsername() + "成功");
-//		return "redirect:/user";
-//	}
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public String update(@Valid @ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
+		User dbUser = userService.getUser(user.getId());
+		dbUser.setUsername(user.getUsername());
+		updatePassword(user.getUsername(), user.getPassword(), dbUser);
+		userService.updateUser(dbUser);
+		redirectAttributes.addFlashAttribute("message", "更新用户" + user.getUsername() + "成功");
+		return "redirect:/user";
+	}
 	
 
 	/**
 	 * 所有RequestMapping方法调用前的Model准备方法, 实现Struts2 Preparable二次部分绑定的效果,先根据form的id从数据库查出User对象,再把Form提交的内容绑定到该对象上。
 	 * 因为仅update()方法的form中有id属性，因此仅在update时实际执行.
 	 */
-//	@ModelAttribute
-//	public void getUser(@RequestParam(value = "id", defaultValue = "-1") Integer id, Model model) {
-//		if (id != -1) {
-//			model.addAttribute("user", userService.getUser(id));
-//		}
-//	}
+	@ModelAttribute
+	public void getUser(@RequestParam(value = "id", defaultValue = "-1") Integer id, Model model) {
+		if (id != -1) {
+			model.addAttribute("user", userService.getUser(id));
+		}
+	}
 }

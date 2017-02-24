@@ -56,7 +56,7 @@
                             			<td>${user.id}</td>
 										<td>${user.username}</td>
 										<td>
-											<a href="javascript:void(0);" onclick="edit()">编辑</a>
+											<a href="${ctx}/user/update/${user.id}">编辑</a>
 											<a href="${ctx}/user/delete/${user.id}">删除</a>
 										</td>
 									</tr>
@@ -74,7 +74,7 @@
 					        <h4 class="modal-title" id="myModalLabel">新增</h4>
 					      </div>
 					      <div class="modal-body">
-					        <form id="addForm" role="form" action="${ctx}/user/update" method="post" class="form-horizontal">
+					        <form id="addForm" role="form" action="${ctx}/user/add" method="post" class="form-horizontal">
 								<input type="hidden" name="id" id="id" value="${user.id}"/>
 									<div class="form-group input-group">
 										<span class="input-group-addon">用户名：</span>
