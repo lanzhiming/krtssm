@@ -181,6 +181,12 @@ $(function() {
 					<li><a href="${ctx}/role">角色列表</a></li>
 				</ul>
 			</li>
+			<li>
+				<div class="link"><i class="fa fa-code"></i>菜单管理<i class="fa fa-chevron-down"></i></div>
+				<ul class="submenu">
+					<li><a href="${ctx}/menu">菜单列表</a></li>
+				</ul>
+			</li>
 		</ul>
 		</div>
 		<div id="content">

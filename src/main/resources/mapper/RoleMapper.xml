@@ -35,4 +35,21 @@
     delete from role
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
+  <select id="selectMenuId" resultType="Integer">
+  	select menu_id from role_menu where role_id in
+  					<foreach item="item" index="index" collection="list" 
+	                         open="(" separator="," close=")">
+	                        #{item}
+	                </foreach>
+  </select>
+  
+  <!-- 处理批量插入 mybaits -->
+  <insert id="insertAssignUserMap" >
+    insert into user_role (user_id, role_id)
+    values 
+    <foreach item="item" collection="userIds" separator=",">
+	    (#{item},#{roleId})                    
+    </foreach>
+  </insert>
 </mapper>

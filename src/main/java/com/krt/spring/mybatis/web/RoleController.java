@@ -1,25 +1,21 @@
 package com.krt.spring.mybatis.web;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-import javax.validation.Valid;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.crypto.hash.Md5Hash;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.krt.spring.mybatis.common.utils.SysUtils;
+import com.krt.spring.mybatis.common.utils.UserUtils;
+import com.krt.spring.mybatis.entity.Menu;
 import com.krt.spring.mybatis.entity.Role;
 import com.krt.spring.mybatis.entity.User;
 import com.krt.spring.mybatis.service.RoleService;
@@ -36,6 +32,7 @@ public class RoleController {
 
 	@Autowired
 	private RoleService roleService;
+	@Autowired UserService userService;
 	
 //	@RequiresPermissions(value = { "sys:user:view" })
 	@RequestMapping(method = RequestMethod.GET)
@@ -46,8 +43,64 @@ public class RoleController {
 		return "sys/roleList";
 	}
 	
+	@RequestMapping(value = "allocateduser/{id}")
+	public String allocatedUser(@PathVariable("id") Integer id,Model model, RedirectAttributes redirectAttributes) {
+		Role role = roleService.getRole(id);
+		//List<Position> list = positionService.getPositionPage(null, new HashMap<String, Object>(), 1, Integer.MAX_VALUE, "auto").getContent();
+		List<User> users = userService.getAllUser();
+		List<Integer> list = new ArrayList<Integer>();
+		list.add(id);
+		List<User> alreadyAllocatedUsers=roleService.getUsersByRoleId(list);
+		model.addAttribute("role", role);
+		model.addAttribute("users", users);
+		model.addAttribute("alreadyAllocatedUsers", alreadyAllocatedUsers);
+		return "sys/roleAllocated";
+	}
 	
+	@RequestMapping(value = "allocatedusersave",method=RequestMethod.POST)
+	@ResponseBody
+	public boolean allocatedUserSave(@RequestParam("roleId")Long roleId,@RequestParam(value="userids[]",required=false)Long[] userids,Model model, RedirectAttributes redirectAttributes) {
+		boolean flag=false;
+		try {
+//			roleService.allocatedusersave(roleId, userids);
+			roleService.saveAssignUser(roleId, userids);
+			UserUtils.removeCache(UserUtils.CACHE_MENU_N);
+			flag=true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return flag;
+	}
 	
+	@RequestMapping(value = "allocatedmenu/{id}")
+	public String allocatedMenu(@PathVariable("id") Integer id,Model model, RedirectAttributes redirectAttributes) {
+		Role role = roleService.getRole(id);
+		model.addAttribute("role", role);
+		return "sys/roleAllocatedMenu";
+	}
+	
+	@RequestMapping(value = "allocatedmenusave",method=RequestMethod.POST)
+	@ResponseBody
+	public boolean allocatedMenuSave(@RequestParam("roleId")Long roleId,@RequestParam(value="menuids[]",required=false)Long[] menuids,Model model, RedirectAttributes redirectAttributes) {
+		boolean flag=false;
+		try {
+			roleService.allocatedmenusave(roleId, menuids);
+			UserUtils.removeCache(UserUtils.CACHE_MENU_N);
+			SysUtils.getSpringCache(SysUtils.SYS_CACHE).evict(SysUtils.CACHE_MENU_LIST_R+roleId);
+			flag=true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return flag;
+	}
+	
+	@RequestMapping(value="/menu/get/{roleid}", method = RequestMethod.GET)
+	@ResponseBody
+	public  List<Menu> getMenu(@PathVariable("roleid") Integer id) {
+		return SysUtils.getMenuListForR(id);
+	}
 	
 //	@RequestMapping(value = "delete/{id}")
 //	public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {

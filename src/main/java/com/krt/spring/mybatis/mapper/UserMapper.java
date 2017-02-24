@@ -13,4 +13,9 @@ public interface UserMapper {
 	public int insert(User record);
 	public int updateByPrimaryKey(User record);
 	public int deleteByPrimaryKey(Integer id);
+	List<Integer> selectUserId(List<Integer> ids);
+	List<Integer> selectRoleId(List<Integer> ids);
+	List<User> selectAllIn(List<Integer> ids);
+	void deleteByRoleId(Long roleId);
+	void deleteByUserId(Integer userId);
 }

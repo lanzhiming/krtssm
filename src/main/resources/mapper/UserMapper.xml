@@ -41,4 +41,26 @@
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
+  <select id="selectUserId" resultType="Integer">
+  	select user_id from user_role where role_id in
+	<foreach item="item" index="index" collection="list" 
+                    open="(" separator="," close=")">
+                   #{item}
+    </foreach>
+  </select>
+  <select id="selectAllIn" resultMap="BaseResultMap">
+  	select id,  username, password, salt from user where id in
+  					<foreach item="item" index="index" collection="list" 
+	                         open="(" separator="," close=")">
+	                        #{item}
+	                </foreach>
+  </select>
+  <update id="deleteByRoleId">
+  	delete from user_role where role_id = #{roleId}
+  </update>
+  
+  <update id="deleteByUserId">
+  	delete from user_role where user_id = #{userId}
+  </update>
 </mapper>
