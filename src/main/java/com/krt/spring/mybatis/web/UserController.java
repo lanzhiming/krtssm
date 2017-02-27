@@ -32,13 +32,13 @@ import com.krt.spring.mybatis.service.UserService;
  */
 @Controller
 @RequestMapping(value = "/user")
-//@RequiresPermissions(value = { "sys:user:mgr" })
+@RequiresPermissions(value = { "sys:user:mgr" })
 public class UserController {
 
 	@Autowired
 	private UserService userService;
 	
-//	@RequiresPermissions(value = { "sys:user:view" })
+	@RequiresPermissions(value = { "sys:user:view" })
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model) {
 		List<User> users = userService.getAllUser();
@@ -47,7 +47,7 @@ public class UserController {
 		return "sys/userList";
 	}
 	
-//	@RequiresPermissions(value = { "sys:user:edit" })
+	@RequiresPermissions(value = { "sys:user:edit" })
 	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
 	public String updateForm(@PathVariable("id") Integer id, Model model) {
 		User user = userService.getUser(id);
@@ -81,6 +81,7 @@ public class UserController {
 		return obj.toString();
 	}
 	
+	@RequiresPermissions(value = { "sys:user:add" })
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public String add(@RequestParam(value = "id") String id,@RequestParam(value = "username") String username,@RequestParam(value = "password") String password) {
 		User user=null;
@@ -107,7 +108,7 @@ public class UserController {
 		}
 	}
 	
-	
+	@RequiresPermissions(value = { "sys:user:delete" })
 	@RequestMapping(value = "delete/{id}")
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
 		User user = userService.getUser(id);
@@ -121,7 +122,7 @@ public class UserController {
 		return "redirect:/user";
 	}
 	
-//	@RequiresPermissions(value = { "sys:user:edit" })
+	@RequiresPermissions(value = { "sys:user:edit" })
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public String update(@Valid @ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
 		User dbUser = userService.getUser(user.getId());

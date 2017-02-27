@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class SystemController {
 	private static final Logger log=LoggerFactory.getLogger(SystemController.class);
 	
-	@RequestMapping(value="/sys/f")
+	@RequestMapping(value="/admin/index")
 	public String index(){
 		return "sys/index";
 	}

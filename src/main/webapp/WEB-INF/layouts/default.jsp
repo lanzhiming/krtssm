@@ -182,9 +182,15 @@ $(function() {
 				</ul>
 			</li>
 			<li>
-				<div class="link"><i class="fa fa-code"></i>菜单管理<i class="fa fa-chevron-down"></i></div>
+				<div class="link"><i class="fa fa-code"></i>资源管理<i class="fa fa-chevron-down"></i></div>
 				<ul class="submenu">
-					<li><a href="${ctx}/menu">菜单列表</a></li>
+					<li><a href="${ctx}/menu">资源列表</a></li>
+				</ul>
+			</li>
+			<li>
+				<div class="link"><i class="fa fa-code"></i>字典管理<i class="fa fa-chevron-down"></i></div>
+				<ul class="submenu">
+					<li><a href="${ctx}/dictionaryType">字典列表</a></li>
 				</ul>
 			</li>
 		</ul>

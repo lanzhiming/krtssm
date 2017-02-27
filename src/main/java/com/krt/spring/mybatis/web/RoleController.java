@@ -3,6 +3,7 @@ package com.krt.spring.mybatis.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,14 +28,14 @@ import com.krt.spring.mybatis.service.UserService;
  */
 @Controller
 @RequestMapping(value = "/role")
-//@RequiresPermissions(value = { "sys:user:mgr" })
+@RequiresPermissions(value = { "sys:role:mgr" })
 public class RoleController {
 
 	@Autowired
 	private RoleService roleService;
 	@Autowired UserService userService;
 	
-//	@RequiresPermissions(value = { "sys:user:view" })
+	@RequiresPermissions(value = { "sys:user:view" })
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model) {
 		List<Role> roles = roleService.getAllRole();
@@ -86,8 +87,8 @@ public class RoleController {
 		boolean flag=false;
 		try {
 			roleService.allocatedmenusave(roleId, menuids);
-			UserUtils.removeCache(UserUtils.CACHE_MENU_N);
-			SysUtils.getSpringCache(SysUtils.SYS_CACHE).evict(SysUtils.CACHE_MENU_LIST_R+roleId);
+//			UserUtils.removeCache(UserUtils.CACHE_MENU_N);
+//			SysUtils.getSpringCache(SysUtils.SYS_CACHE).evict(SysUtils.CACHE_MENU_LIST_R+roleId);
 			flag=true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -99,7 +100,8 @@ public class RoleController {
 	@RequestMapping(value="/menu/get/{roleid}", method = RequestMethod.GET)
 	@ResponseBody
 	public  List<Menu> getMenu(@PathVariable("roleid") Integer id) {
-		return SysUtils.getMenuListForR(id);
+//		return SysUtils.getMenuListForR(id);
+		return SysUtils.getMenuListForRole(id);
 	}
 	
 //	@RequestMapping(value = "delete/{id}")

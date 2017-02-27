@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ import com.krt.spring.mybatis.service.MenuService;
 
 @Controller
 @RequestMapping("/menu")
+@RequiresPermissions(value = { "sys:menu:mgr" })
 public class MenuController {
 	
 	@Autowired MenuService menuService;
@@ -39,7 +41,8 @@ public class MenuController {
 	@RequestMapping(value="/get", method = RequestMethod.GET)
 	@ResponseBody
 	public  List<Menu> get() {
-		return SysUtils.getAllMenuList();
+//		return SysUtils.getAllMenuList();
+		return SysUtils.findAllMenuList();
 	}
 	
 	@RequestMapping(value = "/create/{id}", method = RequestMethod.GET)
@@ -60,8 +63,8 @@ public class MenuController {
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	public String create(@Valid Menu menu, RedirectAttributes redirectAttributes) {
 		menuService.updateMenu(menu);
-		SysUtils.getSpringCache(SysUtils.SYS_CACHE).evict(SysUtils.CACHE_MENU_LIST);
-		UserUtils.removeCache(UserUtils.CACHE_MENU_N);
+//		SysUtils.getSpringCache(SysUtils.SYS_CACHE).evict(SysUtils.CACHE_MENU_LIST);
+//		UserUtils.removeCache(UserUtils.CACHE_MENU_N);
 		redirectAttributes.addFlashAttribute("message", "创建菜单成功");
 		return "redirect:/menu";
 	}

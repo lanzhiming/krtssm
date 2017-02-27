@@ -46,6 +46,27 @@ public class SysUtils {
 		}
 	}
 	
+	public static List<Menu> getMenuListForRole(Integer id){
+		MenuService menuService = SpringContextHolder.getBean(MenuService.class);
+		RoleService roleService = SpringContextHolder.getBean(RoleService.class);
+		List<Menu> menus = menuService.getAllMenu();
+		List<Menu> list = new ArrayList<Menu>();
+		sortList(list, menus, 0, true);
+		List<Integer> ids=new ArrayList<Integer>();
+		ids.add(id);
+		List<Integer> currentMenuIds = roleService.getMenuIdsByRoleId(ids);
+		wrapZtreeData(currentMenuIds, list);
+		return list;
+	}
+	
+	public static List<Menu> findAllMenuList(){
+		MenuService menuService = SpringContextHolder.getBean(MenuService.class);
+		List<Menu> menus = menuService.getAllMenu();
+		ArrayList<Menu> list = new ArrayList<Menu>();
+		sortList(list, menus, 0, true);
+		return list;
+	}
+	
 	/**
 	 * 获取所有的菜单数据
 	 * @return

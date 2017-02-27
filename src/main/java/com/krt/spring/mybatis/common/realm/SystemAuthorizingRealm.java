@@ -1,5 +1,6 @@
 package com.krt.spring.mybatis.common.realm;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
@@ -19,7 +20,9 @@ import org.apache.shiro.util.ByteSource;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
+import com.krt.spring.mybatis.entity.Menu;
 import com.krt.spring.mybatis.entity.User;
 import com.krt.spring.mybatis.service.UserService;
 
@@ -38,12 +41,35 @@ public class SystemAuthorizingRealm extends AuthorizingRealm{
 			PrincipalCollection principals) {
 		SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
 		Object principal=principals.getPrimaryPrincipal();
-		if("superadmin".equals(principal)){
+//		userService.updateLastLoginDate(principal.toString());
+		User user = userService.findUserByUsername(principal.toString());
+		List<Menu> list = userService.getCurrentMenu(user.getId());
+		/*if("superadmin".equals(principal)){
 			info.addRole("admin");
 			info.addStringPermission("sys:insert");
 		}else{
 			
 		}
+		info.addRole("user");*/
+		try {
+			for (Menu menu : list){
+				if (!StringUtils.isEmpty(menu.getPermission())){
+					// 添加基于Permission的权限信息
+					//for (String permission : StringUtils.split(menu.getPermission(),",")){
+						info.addStringPermission(menu.getPermission());
+					//}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// 添加用户权限
+		//info.addStringPermission("user");
+		// 添加用户角色信息
+		/*for (Role role : user.getRoleList()){
+			info.addRole(role.getEnname());
+		}*/
 		info.addRole("user");
 		return info;
 	}

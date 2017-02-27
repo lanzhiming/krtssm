@@ -72,7 +72,6 @@
 				/logout = logout
 				/static/** = anon
 				/userfiles/** = anon
-				/user/updateUser=anon
 				/**=user
 			</value>
 		</constructor-arg>

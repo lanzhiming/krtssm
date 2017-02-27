@@ -49,6 +49,13 @@
                    #{item}
     </foreach>
   </select>
+   <select id="selectRoleId" resultType="Integer">
+  	select role_id from user_role where user_id in
+  					<foreach item="item" index="index" collection="list" 
+	                         open="(" separator="," close=")">
+	                        #{item}
+	                </foreach>
+  </select>
   <select id="selectAllIn" resultMap="BaseResultMap">
   	select id,  username, password, salt from user where id in
   					<foreach item="item" index="index" collection="list" 

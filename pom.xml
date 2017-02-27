@@ -21,6 +21,7 @@
         <dao.target.dir>src/main/java</dao.target.dir>
         <shiro.version>1.2.3</shiro.version>
         <sitemesh.version>2.4.2</sitemesh.version>
+        <druid.version>1.0.15</druid.version>
     </properties>
 
     <dependencies>
@@ -86,6 +87,13 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
+        </dependency>
+        
+        <!-- druid 数据源-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
         </dependency>
 
         <!-- utils -->

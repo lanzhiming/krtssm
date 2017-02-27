@@ -20,7 +20,7 @@
         </DIV>
         <DIV class="control-group">
             <LABEL class="laber_from">密码</LABEL>
-            <DIV  class="controls" ><INPUT class="input_from" type=text id="password" name="password" placeholder=" 请输入密码"><P class=help-block></P></DIV>
+            <DIV  class="controls" ><INPUT class="input_from" type=password id="password" name="password" placeholder=" 请输入密码"><P class=help-block></P></DIV>
         </DIV>
         <DIV class="control-group">
         	<div class="checkbox">
