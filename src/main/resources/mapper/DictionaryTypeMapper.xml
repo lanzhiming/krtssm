@@ -23,6 +23,12 @@
 		from dictionary_type
 		where id = #{id,jdbcType=INTEGER}
 	</select>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from dictionary_type
+    where id = #{id,jdbcType=INTEGER}
+  	</select>
 
 	<delete id="delete" parameterType="java.lang.Integer">
 		delete from dictionary_type

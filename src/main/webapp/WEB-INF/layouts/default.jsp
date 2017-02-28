@@ -190,7 +190,8 @@ $(function() {
 			<li>
 				<div class="link"><i class="fa fa-code"></i>字典管理<i class="fa fa-chevron-down"></i></div>
 				<ul class="submenu">
-					<li><a href="${ctx}/dictionaryType">字典列表</a></li>
+					<li><a href="${ctx}/dictionaryType">字典类型</a></li>
+					<li><a href="${ctx}/dictionary">字典列表</a></li>
 				</ul>
 			</li>
 		</ul>

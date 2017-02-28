@@ -18,6 +18,10 @@
 	<sql id="Base_Column_List">
 		id, type, pid, code, name, remark, create_user, create_date, update_user, update_date, sort
 	</sql>
+	
+	<select id="findAll" resultType="Dictionary">  
+        select * from dictionary  
+    </select>
 
 	<select id="selectById" resultType="java.util.Map">
 		select
@@ -25,6 +29,12 @@
 		from dictionary
 		where id = #{id,jdbcType=INTEGER}
 	</select>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from dictionary
+    where id = #{id,jdbcType=INTEGER}
+  	</select>
 
 	<delete id="delete" parameterType="java.lang.Integer">
 		delete from dictionary
@@ -32,54 +42,11 @@
 	</delete>
 
 	<insert id="insert" parameterType="com.krt.spring.mybatis.entity.Dictionary">
-		insert into dictionary
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				id,
-			</if>
-			<if test="type != null">
-				type,
-			</if>
-			<if test="pid != null">
-				pid,
-			</if>
-			<if test="code != null">
-				code,
-			</if>
-			<if test="name != null">
-				name,
-			</if>
-			<if test="remark != null">
-				remark,
-			</if>
-			<if test="sort != null">
-				sort,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=INTEGER},
-			</if>
-			<if test="type != null">
-				#{type,jdbcType=VARCHAR},
-			</if>
-			<if test="pid != null">
-				#{pid,jdbcType=INTEGER},
-			</if>
-			<if test="code != null">
-				#{code,jdbcType=VARCHAR},
-			</if>
-			<if test="name != null">
-				#{name,jdbcType=VARCHAR},
-			</if>
-			<if test="remark != null">
-				#{remark,jdbcType=VARCHAR},
-			</if>
-			<if test="sort != null">
-				#{sort,jdbcType=INTEGER},
-			</if>
-		</trim>
-	</insert>
+    insert into dictionary (id, type, pid, code, name, remark)
+    values (#{id,jdbcType=INTEGER},  #{type,jdbcType=VARCHAR}, 
+      #{pid,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
 
 	<update id="update" parameterType="com.krt.spring.mybatis.entity.Dictionary">
 		update t_dictionary

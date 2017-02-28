@@ -18,7 +18,10 @@ public class DictionaryTypeService {
     private DictionaryTypeMapper dictionaryTypeMapper;
     @Resource
     private DictionaryMapper dictionaryMapper;
-
+    
+    public DictionaryType selectByPrimaryKey(Integer id){
+    	return dictionaryTypeMapper.selectByPrimaryKey(id);
+    }
     
     public List<DictionaryType> getAlldictionaryType(){
 		

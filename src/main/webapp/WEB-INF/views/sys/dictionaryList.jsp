@@ -13,7 +13,7 @@
 <head>
 
 
-    <title>字典类型</title>
+    <title>字典列表</title>
 
 </head>
 
@@ -32,7 +32,7 @@
         <div class="col-lg-11">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    	字典类型
+                    	字典列表
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -45,22 +45,25 @@
                         <table class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
-                                	<th>编码</th>
                                     <th>字典名称</th>
+                                    <th>字典类型</th>
+                                    <th>上级父ID</th>
+                                	<th>字典编码</th>
                                     <th>备注</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            	<c:forEach items="${dictionaryTypes}" var="dictionaryType">
+                            	<c:forEach items="${dictionarys}" var="dictionary">
                             		<tr>
-                            			<td>${dictionaryType.code}</td>
-										<td>${dictionaryType.name}</td>
-										<td>${dictionaryType.remark}</td>
+										<td>${dictionary.name}</td>
+										<td>${dictionary.type}</td>
+										<td>${dictionary.pid}</td>
+                            			<td>${dictionary.code}</td>
+										<td>${dictionary.remark}</td>
 										<td>
-											<a href="${ctx}/dictionaryType/update/${dictionaryType.id}">编辑</a>
-											<a href="${ctx}/dictionaryType/delete/${dictionaryType.id}">删除</a>
-											<a href="${ctx}/dictionary/addKeyValue/${dictionaryType.id}">添加键值</a>
+											<a href="${ctx}/dictionary/update/${dictionary.id}">编辑</a>
+											<a href="${ctx}/dictionary/delete/${dictionary.id}">删除</a>
 										</td>
 									</tr>
                             	</c:forEach>

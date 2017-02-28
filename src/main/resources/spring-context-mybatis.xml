@@ -35,8 +35,7 @@
 
     <!-- 自动扫描器 -->
     <bean id="mapperScreenConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="annotationClass" value="com.krt.spring.mybatis.MyBatisDao"></property>
-        <property name="basePackage" value="com.krt.spring.mybatis"></property>
+        <property name="basePackage" value="com.krt.**.mapper"></property>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
 
