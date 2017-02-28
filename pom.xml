@@ -22,6 +22,7 @@
         <shiro.version>1.2.3</shiro.version>
         <sitemesh.version>2.4.2</sitemesh.version>
         <druid.version>1.0.15</druid.version>
+        <pagehelper.version>3.7.5</pagehelper.version>
     </properties>
 
     <dependencies>
@@ -101,6 +102,13 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>20.0</version>
+        </dependency>
+        
+        <!--mybatis 分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>${pagehelper.version}</version>
         </dependency>
 
         <dependency>

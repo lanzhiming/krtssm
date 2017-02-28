@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.krt.spring.mybatis.mapper.GoodsMapper">
+<resultMap id="BaseResultMap" type="com.krt.spring.mybatis.entity.Goods">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cateId" jdbcType="INTEGER" property="cateId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="orderNo" jdbcType="INTEGER" property="orderNo" />
+  </resultMap>
+   <select id="queryGoods" parameterType="com.krt.spring.mybatis.entity.PageTableForm" 
+   resultType="com.krt.spring.mybatis.entity.Goods">
+        SELECT * FROM goods where 1=1
+        <if test="pageTableForm.name !=null and pageTableForm.name !=''">
+            and name like concat('%',#{pageTableForm.name},'%')
+        </if>
+        order by id desc
+    </select>
+    
+    <select id="getCount" resultType="int">
+        SELECT count(*) FROM goods
+    </select>
+  
+  
+	<select id="findAll" resultType="Goods">  
+        select * from goods  
+    </select>
+    
+    <select id="findByName" resultType="Goods">
+    	select * from goods where name=#{name}
+    </select>
+    
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+	    select *
+	    from goods
+	    where id = #{id,jdbcType=INTEGER}
+	</select>
+  
+  <insert id="insert" parameterType="com.krt.spring.mybatis.entity.Goods">
+    insert into goods (id, cateId,name, price,description,orderNo)
+    values (#{id,jdbcType=INTEGER},#{cateId,jdbcType=INTEGER},#{name,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DOUBLE}, #{description,jdbcType=VARCHAR},#{orderNo,jdbcType=INTEGER})
+  </insert>
+  
+   
+  <update id="updateByPrimaryKey" parameterType="com.krt.spring.mybatis.entity.Goods">
+    update goods
+    set 
+      name = #{name,jdbcType=VARCHAR},
+      cateId = #{cateId,jdbcType=INTEGER},
+      price =  #{price,jdbcType=DOUBLE},
+      description = #{description,jdbcType=VARCHAR},
+      orderNo = #{orderNo,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+</mapper>

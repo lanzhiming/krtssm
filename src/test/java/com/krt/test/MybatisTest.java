@@ -1,4 +1,4 @@
-package com.hf.test;
+package com.krt.test;
 
 
 import java.sql.SQLException;

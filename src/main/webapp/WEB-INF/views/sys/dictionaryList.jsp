@@ -37,10 +37,9 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                 	<%-- <a class="btn btn-default"  href="${ctx}/">返回首页</a> --%>
-                	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
+                	<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
 					  新增
-					</button>
-					<br/>
+					</button> -->
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover">
                             <thead>

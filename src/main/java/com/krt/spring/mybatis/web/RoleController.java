@@ -3,10 +3,13 @@ package com.krt.spring.mybatis.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,6 +45,40 @@ public class RoleController {
 		model.addAttribute("roles", roles);
 
 		return "sys/roleList";
+	}
+	
+	@RequiresPermissions(value = { "sys:role:edit" })
+	@RequestMapping(value = "create", method = RequestMethod.GET)
+	public String createForm(Model model) {
+		model.addAttribute("role", new Role());
+		model.addAttribute("action", "create");
+		return "sys/roleForm";
+	}
+	
+	@RequiresPermissions(value = { "sys:role:edit" })
+	@RequestMapping(value = "create", method = RequestMethod.POST)
+	public String create(@Valid Role role, RedirectAttributes redirectAttributes) {
+		roleService.updateRole(role);
+		redirectAttributes.addFlashAttribute("message", "创建角色成功");
+		return "redirect:/role";
+	}
+	
+	@RequiresPermissions(value = { "sys:role:edit" })
+	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
+	public String updateForm(@PathVariable("id") Integer id, Model model) {
+		Role role = roleService.getRole(id);
+		model.addAttribute("role", role);
+		model.addAttribute("action", "update");
+		return "sys/roleForm";
+	}
+	
+	@RequiresPermissions(value = { "sys:role:edit" })
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public String update(@Valid @ModelAttribute("role") Role role, RedirectAttributes redirectAttributes) {
+		
+		roleService.updateRole(role);
+		redirectAttributes.addFlashAttribute("message", "更新角色类型" + role.getRoleType() + "成功");
+		return "redirect:/role";
 	}
 	
 	@RequestMapping(value = "allocateduser/{id}")

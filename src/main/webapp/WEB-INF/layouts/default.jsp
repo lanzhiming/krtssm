@@ -194,6 +194,12 @@ $(function() {
 					<li><a href="${ctx}/dictionary">字典列表</a></li>
 				</ul>
 			</li>
+			<li>
+				<div class="link"><i class="fa fa-code"></i>商品管理<i class="fa fa-chevron-down"></i></div>
+				<ul class="submenu">
+					<li><a href="${ctx}/goodsManage/init">商品列表</a></li>
+				</ul>
+			</li>
 		</ul>
 		</div>
 		<div id="content">

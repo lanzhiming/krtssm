@@ -14,5 +14,7 @@ public interface DictionaryTypeMapper{
 	public DictionaryType selectByPrimaryKey(Integer id);
 	Integer checkCode(String code,Integer id);
 	public void deleteByPrimaryKey(Integer id) throws Exception;
+	public int insert(DictionaryType record);
+	public int update(DictionaryType record);
    
 }

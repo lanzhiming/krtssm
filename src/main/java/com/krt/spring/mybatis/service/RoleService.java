@@ -41,11 +41,11 @@ public class RoleService {
 		return roleMapper.selectByPrimaryKey(id);
 	}
 	
-	public void updateRole(Role Role) {
-		if(Role.getId()==null){
-			roleMapper.insert(Role);
+	public void updateRole(Role role) {
+		if(role.getId()==null){
+			roleMapper.insert(role);
 		}else{
-			roleMapper.updateByPrimaryKey(Role);
+			roleMapper.updateByPrimaryKey(role);
 		}
 	}
 	

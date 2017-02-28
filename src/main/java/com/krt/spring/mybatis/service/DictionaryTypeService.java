@@ -2,6 +2,7 @@ package com.krt.spring.mybatis.service;
 
 import org.springframework.stereotype.Service;
 
+import com.krt.spring.mybatis.entity.Dictionary;
 import com.krt.spring.mybatis.entity.DictionaryType;
 import com.krt.spring.mybatis.entity.User;
 import com.krt.spring.mybatis.mapper.DictionaryMapper;
@@ -26,6 +27,14 @@ public class DictionaryTypeService {
     public List<DictionaryType> getAlldictionaryType(){
 		
 		return dictionaryTypeMapper.findAll();
+	}
+    
+    public void updateDictionaryType(DictionaryType dictionaryType) {
+		if(dictionaryType.getId()==null){
+			dictionaryTypeMapper.insert(dictionaryType);
+		}else{
+			dictionaryTypeMapper.update(dictionaryType);
+		}
 	}
 
     /**
