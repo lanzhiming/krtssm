@@ -7,24 +7,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<style type="text/css">
-.page{
-    width:200px;
-}
-.page span{
-    margin-left:30px;
-}
-a{
-    text-decoration:none;
-}
-</style>
 <script type="text/javascript" src="${ctx}/static/js/jquery.min.js"></script>
 <script type="text/javascript">
     $(function() {
         var $table = $(".goods_table");
         var currentPage = 1;
-        var pageSize = 10;
+        var pageSize = 5;
         var sumRows = $table.find("tbody tr").length;
         var sumPages = Math.ceil(sumRows/pageSize);
         
@@ -32,27 +20,33 @@ a{
         paging(currentPage)
         
         $("#prev").click(function(){
+        	if($(this).hasClass("disabled")){
+        		return;
+        	}
             currentPage--;
             init();
             paging(currentPage);
         })
         
         $("#next").click(function(){
+        	if($(this).hasClass("disabled")){
+        		return;
+        	}
             currentPage++;
             init();
             paging(currentPage);
         })
         
-        var $page = $("<div class='page'></div>");
+        var $page = $("<li class='page'></li>");
         for(var pageIndex=1;pageIndex<=sumPages;pageIndex++){
-            $("<a href='#'><span>["+(pageIndex)+"]</span></a>").bind("click",{"newPage":pageIndex},function(event){
+            $("<a href='#'><span>"+(pageIndex)+"</span></a>").bind("click",{"newPage":pageIndex},function(event){
                 currentPage=event.data["newPage"];
                 init();
                 paging(currentPage);
             }).appendTo($page);
         }
-        $('#whichpage').append($page);
-        /*$page.insertAfter($table); */
+        /* $('#whichpage').append($page); */
+        $page.insertAfter($("#prev")); 
         
         function paging(currentPage){
             $table.find("tbody tr:not(.prevnext)").hide().slice((currentPage-1)*pageSize,(currentPage)*pageSize).show();
@@ -63,14 +57,14 @@ a{
         
         function init(){
             if(currentPage==1){
-                $("#prev").attr({"disabled":"disabled"});
+                $("#prev").addClass("disabled");
             }else{
-                $("#prev").removeAttr("disabled");
+                $("#prev").removeClass("disabled");
             }
             if(currentPage==sumPages){
-                $("#next").attr({"disabled":"disabled"});
+                $("#next").addClass("disabled");
             }else{
-                $("#next").removeAttr("disabled");
+                $("#next").removeClass("disabled");
             }
         }
         $("#search").click(function(){
@@ -100,7 +94,7 @@ a{
                 	<%-- <a class="btn btn-default"  href="${ctx}/">返回首页</a> --%>
   				<form action="${ctx}/goodsManage/query" id="form0" method="POST">
                	<div >
-               		<input name="name" id="name" type="text"  placeholder="根据商品名称查询">
+               		<input name="name" id="name" class="form"  type="text"  placeholder="根据商品名称查询">
                		<input type="submit" class="btn btn-primary btn-sm" value="查询"/>
                	<a class="btn btn-primary btn-sm" href="${ctx}/goodsManage/create">新增</a>
                	</div>
@@ -130,7 +124,7 @@ a{
 									</td>
 			                    </tr>
 			                </c:forEach>
-			                <tr class="prevnext">
+			                <!-- <tr class="prevnext">
 			                    <td>
 			                        <input id="prev" type="button" value="上一页">
 			                    </td>
@@ -140,28 +134,28 @@ a{
 			                    </td>
 			                    <td id="whichpage">
 			                    </td>
-			                </tr>
+			                </tr> -->
                             </tbody>
                         </table>
-                       <!--  <nav aria-label="Page navigation">
+                        <nav aria-label="Page navigation">
 						  <ul class="pagination">
-						    <li>
+						    <li id="prev">
 						      <a href="#" aria-label="Previous">
 						        <span aria-hidden="true">&laquo;</span>
 						      </a>
 						    </li>
-						    <li><a href="#">1</a></li>
+						    <!-- <li><a href="#">1</a></li>
 						    <li><a href="#">2</a></li>
 						    <li><a href="#">3</a></li>
 						    <li><a href="#">4</a></li>
-						    <li><a href="#">5</a></li>
-						    <li>
+						    <li><a href="#">5</a></li> -->
+						    <li id="next">
 						      <a href="#" aria-label="Next">
 						        <span aria-hidden="true">&raquo;</span>
 						      </a>
 						    </li>
 						  </ul>
-						</nav> -->
+						</nav>
                         <input id="currentPage" type="hidden" name="currentPage" value="${pageTableForm.currentPage}">
                     </div>
                     <!-- /.table-responsive -->

@@ -5,7 +5,6 @@
 <html lang="zh-CN">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
 <%@ include file="/WEB-INF/views/include/head.jsp"%>
 <script type="text/javascript">
 	$(document).ready(function(){
